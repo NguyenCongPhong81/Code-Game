@@ -1,37 +1,41 @@
-import { _decorator, Component, Node, TiledMap, Prefab, TiledLayer, v2, Vec3, instantiate, EventTouch, TiledTile, input, Input } from 'cc';
+import { _decorator, Component, Node, TiledMap, Prefab, TiledLayer, v2, Vec3, instantiate, EventTouch, TiledTile, input, Input, Sprite, Button, EventMouse } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('game')
 export class game extends Component {
-    @property(Prefab)
-    public nodePrefab : Prefab | null = null;
+    @property(Sprite)
+    label : Sprite = null;
+    @property(Sprite)
+    exit : Sprite =  null;
+    @property(Button)
+    btnExit : Button = null;
+    @property(Node)
+    map : Node =  null;
+    onLoad(){
+        input.on(Input.EventType.MOUSE_MOVE, this.onTouchStart, this)
+        this.btnExit.node.on(Button.EventType.CLICK, this.close, this)
+        // this.label.enabled = false;
+        // this.exit.enabled = false;
+    }
 
-    @property(TiledLayer)
-    public tiledLayer : TiledLayer | null = null;
-
-    @property(TiledTile)
-    public tiledTile : TiledTile | null =  null;
-    layer: any;
-
-    
-    // onLoad(){
-        
-    //     input.on(Input.EventType.TOUCH_START, this.onTouchStart, this);
-    //     const tiledTile = this.layer.getTiledTileAt(0, 0);
-    //     console.log(tiledTile);
-    // }
+   
     start() {
-
+        
         
     }
-    
+
     update(deltaTime: number) {
         
     }
-    onTouchStart(){
-        
-        
-        
+    onTouchStart(even: EventMouse){
+
+        console.log(this.map);
+        this.label.enabled =  true;
+    }
+    close(button: Button){
+        this.label.enabled = false;
+        this.exit.enabled = false;
+        console.log("oke");
     }
 }
 
